@@ -36,3 +36,5 @@ group :development do
 end
 
 gem "ancestry", "~> 3.0"
+
+gem "faker", "~> 1.9"
