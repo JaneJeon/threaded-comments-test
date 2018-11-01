@@ -6,6 +6,7 @@ class AddPaths < ActiveRecord::Migration[5.2]
     add_index :comments, :path
     add_column :comments, :htap, :integer, array: true, null: false
     add_index :comments, :htap
+    change_column :comments, :id, :integer
 
     execute <<-SQL
       ALTER TABLE comments
