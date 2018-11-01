@@ -1,12 +1,15 @@
 class AddPaths < ActiveRecord::Migration[5.2]
   def change
-    add_reference :comments, :parent, index: true
-    add_column :comments, :path, :integer, array: true, null: false, index: true
-    add_column :comments, :htap, :integer, array: true, null: false, index: true
+    add_reference :comments, :parent, foreign_key: { to_table: :comments }, index: true
+    add_column :comments, :path, :integer, array: true, null: false
+    add_column :comments, :htap, :integer, array: true, null: false
+    add_index :comments, :path
+    add_index :comments, :htap
 
     reversible do |dir|
       dir.up do
         change_column :comments, :id, :integer
+        change_column :comments, :parent_id, :integer
 
         execute <<-SQL
           CREATE FUNCTION comment_build_path() RETURNS TRIGGER AS $$
@@ -38,6 +41,7 @@ class AddPaths < ActiveRecord::Migration[5.2]
 
       dir.down do
         change_column :comments, :id, :bigint
+        change_column :comments, :parent_id, :bigint
 
         execute <<-SQL
           DROP TRIGGER build_path ON comments;
