@@ -15,13 +15,13 @@ Comment.delete_all
 (depth-1).times do
   if parents.empty?
     width.times do
-      parents << Comment.create(body: Faker::Matz.quote)
+      parents << Comment.create!(body: Faker::Matz.quote)
     end
   end
 
   parents.each do |parent|
     width.times do
-      children << Comment.create(body: Faker::Matz.quote, parent_id: parent.id)
+      children << parent.children.create!(body: Faker::Matz.quote)
     end
   end
 
