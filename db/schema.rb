@@ -15,17 +15,14 @@ ActiveRecord::Schema.define(version: 2018_11_01_011050) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "comments", force: :cascade do |t|
+  create_table "comments", id: :serial, force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "parent_id"
+    t.bigint "parent_id"
     t.integer "path", null: false, array: true
     t.integer "htap", null: false, array: true
-    t.index ["htap"], name: "index_comments_on_htap"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
-    t.index ["path"], name: "index_comments_on_path"
   end
 
-  add_foreign_key "comments", "comments", column: "parent_id", name: "parent_id_fk", on_delete: :cascade
 end
