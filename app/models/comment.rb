@@ -1,3 +1,6 @@
 class Comment < ApplicationRecord
-  self.ignored_columns = %w(created_at updated_at path htap)
+  default_scope { select([:id, :body, :parent_id]) }
+
+  belongs_to :parent, :class_name => 'Comment', optional: true
+  has_many :children, :class_name => 'Comment', :foreign_key => 'parent_id'
 end
