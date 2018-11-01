@@ -3,9 +3,8 @@ class CommentsController < ApplicationController
 
   # GET /comments
   def index
-    # SELECT * FROM comments ORDER BY path;
-    # SELECT * FROM comments ORDER BY htap;
-    @comments = Comment.all
+    # by default, sort by old
+    @comments = Comment.order(params[:sort] == 'new' ? :htap : :path).limit 25
 
     render json: @comments
   end
@@ -48,6 +47,6 @@ class CommentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def comment_params
-      params.require(:comment).permit(:body)
+      params.require(:comment).permit(:body, :parent_id)
     end
 end
