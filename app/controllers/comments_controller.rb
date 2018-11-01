@@ -3,6 +3,8 @@ class CommentsController < ApplicationController
 
   # GET /comments
   def index
+    # SELECT * FROM comments ORDER BY path;
+    # SELECT * FROM comments ORDER BY htap;
     @comments = Comment.all
 
     render json: @comments
