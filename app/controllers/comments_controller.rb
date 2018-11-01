@@ -4,7 +4,12 @@ class CommentsController < ApplicationController
   # GET /comments
   def index
     # by default, sort by old
-    @comments = Comment.order(params[:sort] == 'new' ? :htap : :path).limit 25
+    sort = params[:sort] == 'new' ? 'htap' : 'path'
+
+    @comments = Comment
+      .where("#{sort} > ARRAY[?]::INT[]", params[:after] || [0])
+      .order(sort)
+      .limit 25
 
     render json: @comments
   end
