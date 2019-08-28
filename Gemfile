@@ -35,4 +35,4 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
 end
 
-gem "faker", "~> 1.9"
+gem "faker", "~> 2.2"
